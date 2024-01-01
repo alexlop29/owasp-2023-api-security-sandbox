@@ -1,27 +1,26 @@
-import { readFileSync } from "fs";
-import path = require("path");
+import { Revenue, Shops } from "../types/Shop";
+import { DocumentController } from "./document";
 
 class ShopController {
-  constructor() {}
+  constructor(public Document = new DocumentController()) {}
 
-  getAllShops() {
+  getAllShops(): Shops {
     return {
       Shops: [
         {
-          ShopName: "Delicious Pie",
+          Name: "Delicious Pie",
         },
         {
-          ShopName: "Fresh Kicks",
+          Name: "Fresh Kicks",
         },
       ],
     };
-  };
+  }
 
-  getShopRevenue(shopName: string) {
-    let filePath = path.join(__dirname, "..", "data", `${shopName}.json`);
-    let contents = readFileSync(filePath, "utf8");
-    return JSON.parse(contents);
-  };
+  getShopRevenue(Shop: string): Revenue {
+    const revenue = this.Document.getFile(Shop);
+    return this.Document.readFile(revenue);
+  }
 }
 
 export { ShopController };
