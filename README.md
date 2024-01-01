@@ -1,5 +1,7 @@
 ## About
-Demonstrates how to remediate broken object level authorization and implement rate limiting in an Express.js API; Inspired by OWASP's 2023 API vulnerability report
+In the [OWASP 2023 API Security Awareness Report](https://owasp.org/API-Security/editions/2023/en/0x03-introduction/), Broken Object Level Authorization and Unrestricted Resource Consumption are listed as two of the top five API vulnerabilties, as identified by numerous bug bounty platforms and publicly available reports. Refer to the [terminology](#🔖-terminology) section for addititional insight into each vulnerability.
+
+The purpose of this project is to provide a practical walk-through of each vulnerability, and work to implement best practices in each presented scenario.
 
 ## Scenarios
 > Scenario #1: An e-commerce platform for online stores (shops) provides a listing page with the revenue charts for their hosted shops. Inspecting the browser requests, an attacker can identify the API endpoints used as a data source for those charts and their pattern: /shops/{shopName}/revenue_data.json. Using another API endpoint, the attacker can get the list of all hosted shop names. With a simple script to manipulate the names in the list, replacing {shopName} in the URL, the attacker gains access to the sales data of thousands of e-commerce stores.
