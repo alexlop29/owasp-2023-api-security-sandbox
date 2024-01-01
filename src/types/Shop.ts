@@ -8,7 +8,9 @@ type Shops = {
 
 type Revenue = {
   Name: string;
-  Revnue: Number;
+  Revenue: Number;
 };
+
+// Consider to splitting into types for documents controller
 
 export { Shop, Shops, Revenue };

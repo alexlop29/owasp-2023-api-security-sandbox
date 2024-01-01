@@ -17,10 +17,10 @@ class ShopController {
     };
   }
 
-  getShopRevenue(Shop: string): Revenue {
-    const revenue = this.Document.getFile(Shop);
-    return this.Document.readFile(revenue);
-  }
+//   getShopRevenue(Shop: string): Revenue {
+//     const revenue = this.Document.getFile(Shop);
+//     return this.Document.readFile(revenue);
+//   }
 }
 
 export { ShopController };

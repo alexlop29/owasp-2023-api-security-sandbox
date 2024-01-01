@@ -1,19 +1,20 @@
-import { Shop } from "../types/Shop";
-import * as path from "path";
-import { readFileSync } from "fs";
 import { Revenue } from "../types/Shop";
+import { DocumentError } from "../types/Documents";
+import { promises as fs } from "fs";
 
 class DocumentController {
   constructor() {}
 
-  getFile(Shop: Shop["Name"]): string {
-    return path.join(__dirname, "..", "data", `${Shop}.json`);
-  }
+  // Improve error handling for non-ENOENT: no such file or directory errors
+  async readFile(Name: string): Promise<Revenue | DocumentError> {
+    try {
+      let file = await fs.readFile(Name, "utf-8");
+      return JSON.parse(file)
+    } catch (error: unknown) {
+      return { Status: 404, Message: "File Not Found" };
+    }
+  };
 
-  // Should be async func?
-  readFile(File: string): Revenue {
-    return JSON.parse(readFileSync(File, "utf8"));
-  }
 }
 
 export { DocumentController };
