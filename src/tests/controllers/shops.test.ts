@@ -1,5 +1,6 @@
 import { ShopController } from "../../controllers/shop";
-import { joeAtFreshKicks } from "../fixtures/personas";
+import { DocumentError, Revenue } from "../../types";
+import { joeAtFreshKicks, kyleAtAwesomeSocks } from "../fixtures/personas";
 
 describe("Should describe the shop controller", () => {
   test("Should return all available shops", () => {
@@ -15,11 +16,27 @@ describe("Should describe the shop controller", () => {
       ],
     });
   });
-  test("Should return a shop's revenue report", async () => {
+  test("Should return a revenue report if the user has access to the shop", async () => {
     const shop = new ShopController();
     expect(await shop.getShopRevenue("freshkicks", joeAtFreshKicks)).toStrictEqual({
       Name: "Fresh Kicks",
       Revenue: 500.0,
     });
+  });
+  test("Should return 403 if the user does not have access to the shop", async() => {
+    const shop = new ShopController();
+    let response: Revenue | DocumentError = await shop.getShopRevenue("deliciouspie", joeAtFreshKicks);
+    if ("Status" in response && "Message" in response) {
+      expect(response["Status"]).toEqual(401);
+      expect(response["Message"]).toBe("Unauthorized");
+    }
+  });
+  test("Should return 404 if the user has access, but the revenue report is not found", async() => {
+    const shop = new ShopController();
+    let response: Revenue | DocumentError = await shop.getShopRevenue("awesomesocks", kyleAtAwesomeSocks);
+    if ("Status" in response && "Message" in response) {
+      expect(response["Status"]).toEqual(404);
+      expect(response["Message"]).toBe("File Not Found");
+    }
   });
 });

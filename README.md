@@ -66,5 +66,4 @@ Prevention
 Research any versus unknown in Typescript.
 
 Left off:
-
-- Failure in shop route after adding validation to check user file permissions in the document controller
+- Improve error handling in the shops test / controller

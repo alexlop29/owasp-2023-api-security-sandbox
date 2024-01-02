@@ -4,7 +4,7 @@ import { DocumentError, DocumentResponse } from "../../types/documents";
 import { joeAtFreshKicks, kyleAtAwesomeSocks } from "../fixtures/personas";
 
 describe("Should describe the document controller", () => {
-  test("Should return 200 when the user requests a file and has access to it", async () => {
+  test("Should return the file contents when the user requests a file and has access to it", async () => {
     let document = new DocumentController();
     expect(await document.readFile("freshkicks", joeAtFreshKicks)).toStrictEqual({
       Name: "Fresh Kicks",
