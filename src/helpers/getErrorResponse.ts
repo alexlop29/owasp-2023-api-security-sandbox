@@ -1,7 +1,7 @@
 import { DocumentError } from "../types";
 
 const getErrorResponse = (error: any): DocumentError => {
-  if (error.includes("not found")) {
+  if ("errno" in error && error["errno"] == -2) {
     return { Status: 404, Message: "File Not Found" };
   } else if ("Status" in error && error["Status"] == 401) {
     return { Status: 401, Message: "Unauthorized" };
