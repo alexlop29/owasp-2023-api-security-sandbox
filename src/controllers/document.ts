@@ -2,6 +2,7 @@ import { Revenue } from "../types/shop";
 import { DocumentError, DocumentResponse } from "../types/documents";
 import { promises as fs } from "fs";
 import { User } from "../types";
+import { getErrorResponse } from "../helpers/getErrorResponse";
 
 class DocumentController {
   constructor() {}
@@ -16,14 +17,13 @@ class DocumentController {
   */
   async readFile(Name: string, User: User): Promise<Revenue | DocumentError> {
     try {
-      let userAccess: DocumentResponse | DocumentError  = this.readFilePermissions(Name, User["storeName"]);
+      this.readFilePermissions(Name, User["storeName"]);
       let file = await fs.readFile(`src/data/${Name}.json`, "utf-8");
       return JSON.parse(file);
-    } catch (error: unknown) {
-      
-      return { Status: 404, Message: "File Not Found" };
+    } catch (error: any) {
+      return getErrorResponse(error);
     }
-  };
+  }
 
   readFilePermissions(
     Name: string,
@@ -34,7 +34,7 @@ class DocumentController {
     } else {
       return { Status: 401, Message: "Unauthorized" };
     }
-  };
+  }
 }
 
 export { DocumentController };
