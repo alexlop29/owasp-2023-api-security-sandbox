@@ -31,6 +31,7 @@ The purpose of this project is to provide a practical walk-through of each vulne
 ## 🏭 Running Tests
 
 ## Disclaimer
+
 - Add a note to discuss typically storing the data in an external backend, and using Sinon to mock the functions, etc.
 
 ## 🚧 To Do
@@ -58,26 +59,13 @@ Prevention
 > Implement a limit on how often a client can interact with the API within a defined timeframe (rate limiting)...Rate limiting should be fine tuned based on the business needs. Some API Endpoints might require stricter policies.
 
 ## Helpful Documentation:
+
 - [ReadFile vs ReadFileSync - Stack Overflow](https://stackoverflow.com/questions/17604866/difference-between-readfile-and-readfilesync)
 - [ReadFile vs ReadFileSync - Node.js Documentation](https://nodejs.org/dist/latest-v6.x/docs/api/fs.html#fs_fs_readfile_file_options_callback)
 
 Research any versus unknown in Typescript.
 
-
-```
-// import { ShopController } from "../../controllers/shop";
-
-// test("Should return available shops", () => {
-//   const shop = new ShopController();
-//   expect(shop.getAllShops()).toStrictEqual({
-//     Shops: [
-//       {
-//         Name: "Delicious Pie",
-//       },
-//       {
-//         Name: "Fresh Kicks",
-//       },
-//     ],
-//   });
-// });
-```
+Left off:
+- Working on tests in the document controller
+- Failure in shop route after adding validation to check user file permissions in the document controller
+- See tests

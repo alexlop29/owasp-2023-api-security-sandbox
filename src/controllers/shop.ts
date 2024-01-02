@@ -1,4 +1,5 @@
-import { Revenue, Shops } from "../types/Shop";
+import { DocumentError } from "../types/documents";
+import { Shops, Revenue } from "../types";
 import { DocumentController } from "./document";
 
 class ShopController {
@@ -17,10 +18,13 @@ class ShopController {
     };
   }
 
-//   getShopRevenue(Shop: string): Revenue {
-//     const revenue = this.Document.getFile(Shop);
-//     return this.Document.readFile(revenue);
-//   }
+  async getShopRevenue(Shop: string): Promise<Revenue | DocumentError> {
+    try {
+      return await this.Document.readFile(Shop);
+    } catch (error: unknown) {
+      return error as DocumentError;
+    }
+  }
 }
 
 export { ShopController };

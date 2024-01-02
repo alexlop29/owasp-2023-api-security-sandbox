@@ -1,6 +1,11 @@
-type DocumentError = {
-    Status: number,
-    Message: string
+type DocumentResponse = {
+  Status: number;
+  Message: string;
 };
 
-export { DocumentError };
+type DocumentError = {
+  Status: number;
+  Message: string;
+};
+
+export { DocumentError, DocumentResponse };
