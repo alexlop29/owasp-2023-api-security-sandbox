@@ -1,31 +1,42 @@
-const { Builder, Browser, By, Key, until } = require("selenium-webdriver");
+const { Builder, By } = require("selenium-webdriver");
+import { AUTH_USER, AUTH_PASSWORD } from "../../config/environment";
 
-/*
-Assumes the server has started already!
-*/
+type authenticationCookie = {
+  domain: string;
+  expiry: number;
+  httpOnly: boolean;
+  name: string;
+  path: string;
+  sameSite: string;
+  secure: boolean;
+  value: string;
+};
+
 const getAuthenticationCookie = async () => {
   let driver = await new Builder().forBrowser("chrome").build();
   try {
-    // does this follow redirects
-    await driver.get("http://localhost:3000/login");
-    const username = await driver
-      .findElement(By.tagName("input") && By.name("username"))
-      .sendKeys("alexanderlopez@owasp.orgs");
-    console.log(username);
+    await driver.get("http://localhost:3001/login");
+    await driver.findElement(By.id("username")).sendKeys(AUTH_USER);
+    await driver.findElement(By.id("password")).sendKeys(AUTH_PASSWORD);
+    await driver
+      .findElement(
+        By.xpath(
+          "/html/body/div/main/section/div/div[2]/div/form/div[3]/button",
+        ),
+      )
+      .click();
+    let cookieValue = await driver
+      .manage()
+      .getCookie("appSession")
+      .then(function (cookie: authenticationCookie) {
+        return cookie["value"];
+      });
+    return cookieValue;
+  } catch (error) {
+    console.log(`Unable to fetch authentication cookie`, error);
   } finally {
     await driver.quit();
   }
 };
-
-// (async function example() {
-//   let driver = await new Builder().forBrowser(Browser.FIREFOX).build();
-//   try {
-//     await driver.get("https://www.google.com/ncr");
-//     await driver.findElement(By.name("q")).sendKeys("webdriver", Key.RETURN);
-//     await driver.wait(until.titleIs("webdriver - Google Search"), 1000);
-//   } finally {
-//     await driver.quit();
-//   }
-// })();
 
 export { getAuthenticationCookie };

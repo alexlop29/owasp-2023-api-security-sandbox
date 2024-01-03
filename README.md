@@ -35,6 +35,8 @@ The purpose of this project is to provide a practical walk-through of each vulne
 
 - [@types/express](https://www.npmjs.com/package/@types/express)
 - [@types/sinon](https://www.npmjs.com/package/@types/sinon)
+- [@types/supertest](https://www.npmjs.com/package/@types/supertest)
+- [@types/selenium-webdriver](https://www.npmjs.com/package/@types/selenium-webdriver)
 
 ## Postman Collection
 
@@ -78,7 +80,10 @@ Research any versus unknown in Typescript.
 Left off:
 
 - Building selenium script
-- Need to configure express.js, auth0/express-open-id-connect
 - Add func to script to retrieve the authentication cookie
-
 - Add routing tests and express.js routing functionality
+
+Current:
+
+- Added Auth0 and Initial Express.js config
+- use supertest to launch the server, pass the open connection to selenium, and retrieve an authentication token
