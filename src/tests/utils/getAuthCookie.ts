@@ -1,5 +1,7 @@
-const { Builder, By } = require("selenium-webdriver");
 import { AUTH_USER, AUTH_PASSWORD } from "../../config/environment";
+
+const { Builder, By } = require("selenium-webdriver");
+const chrome = require("selenium-webdriver/chrome");
 
 type authenticationCookie = {
   domain: string;
@@ -13,7 +15,9 @@ type authenticationCookie = {
 };
 
 const getAuthenticationCookie = async () => {
-  let driver = await new Builder().forBrowser("chrome").build();
+  let chromeOptions = new chrome.Options();
+  chromeOptions.addArguments("--headless");
+  let driver = await new Builder().forBrowser("chrome").setChromeOptions(chromeOptions).build();
   try {
     await driver.get("http://localhost:3001/login");
     await driver.findElement(By.id("username")).sendKeys(AUTH_USER);

@@ -79,11 +79,12 @@ Research any versus unknown in Typescript.
 
 Left off:
 
-- Building selenium script
-- Add func to script to retrieve the authentication cookie
-- Add routing tests and express.js routing functionality
+- Add routing tests and routes
 
-Current:
+Return:
 
-- Added Auth0 and Initial Express.js config
-- use supertest to launch the server, pass the open connection to selenium, and retrieve an authentication token
+- Double Check Auth.test.ts
+
+```
+npm test -- auth.test.ts
+```

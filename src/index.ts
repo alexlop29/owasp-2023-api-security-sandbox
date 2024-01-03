@@ -3,10 +3,12 @@ import { auth, requiresAuth } from "express-openid-connect";
 import { EXPRESS_PORT } from "../src/config/environment";
 import { config } from "../src/config/auth";
 import * as http from "http";
+import { shopRoute } from "./routes/shop";
 
 const app = express();
 
 app.use(auth(config));
+app.use("/shop", shopRoute);
 
 app.get("/", (req, res) => {
   res.send(req.oidc.isAuthenticated() ? "Logged in" : "Logged out");
