@@ -6,7 +6,9 @@ import { joeAtFreshKicks, kyleAtAwesomeSocks } from "../fixtures/personas";
 describe("Should describe the document controller", () => {
   test("Should return the file contents when the user requests a file and has access to it", async () => {
     let document = new DocumentController();
-    expect(await document.readFile("freshkicks", joeAtFreshKicks)).toStrictEqual({
+    expect(
+      await document.readFile("freshkicks", joeAtFreshKicks),
+    ).toStrictEqual({
       Name: "Fresh Kicks",
       Revenue: 500.0,
     });
@@ -49,7 +51,10 @@ describe("Should describe the document controller", () => {
   test("Should return 401 if the user does not have access to the file", () => {
     let document = new DocumentController();
     let contents: DocumentResponse | DocumentError =
-      document.readFilePermissions("deliciouspie", joeAtFreshKicks["storeName"]);
+      document.readFilePermissions(
+        "deliciouspie",
+        joeAtFreshKicks["storeName"],
+      );
     expect(contents["Status"]).toEqual(401);
     expect(contents["Message"]).toBe("Unauthorized");
   });

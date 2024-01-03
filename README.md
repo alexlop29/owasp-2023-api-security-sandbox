@@ -16,6 +16,9 @@ The purpose of this project is to provide a practical walk-through of each vulne
 
 - [Node.js(20.10.0)](https://nodejs.org/en)
 - [Typescript](https://www.typescriptlang.org/)
+- [Express.js](https://expressjs.com)
+- [Auth0 express-openid-connect](https://www.npmjs.com/package/express-openid-connect)
+- [dotenv](https://www.npmjs.com/package/dotenv)
 
 ### Development Libraries
 
@@ -25,6 +28,13 @@ The purpose of this project is to provide a practical walk-through of each vulne
 - [Jest](https://jestjs.io)
 - [Sinon.js](https://sinonjs.org)
 - [SuperTest](https://www.npmjs.com/package/supertest)
+- [Selenium](https://www.selenium.dev/selenium/docs/api/javascript/index.html)
+- [ts-node](https://www.npmjs.com/package/ts-node)
+
+### Type Libraries
+
+- [@types/express](https://www.npmjs.com/package/@types/express)
+- [@types/sinon](https://www.npmjs.com/package/@types/sinon)
 
 ## Postman Collection
 
@@ -66,4 +76,9 @@ Prevention
 Research any versus unknown in Typescript.
 
 Left off:
-- Improve error handling in the shops test / controller
+
+- Building selenium script
+- Need to configure express.js, auth0/express-open-id-connect
+- Add func to script to retrieve the authentication cookie
+
+- Add routing tests and express.js routing functionality
