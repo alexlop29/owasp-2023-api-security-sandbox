@@ -17,7 +17,10 @@ type authenticationCookie = {
 const getAuthenticationCookie = async () => {
   let chromeOptions = new chrome.Options();
   chromeOptions.addArguments("--headless");
-  let driver = await new Builder().forBrowser("chrome").setChromeOptions(chromeOptions).build();
+  let driver = await new Builder()
+    .forBrowser("chrome")
+    .setChromeOptions(chromeOptions)
+    .build();
   try {
     await driver.get("http://localhost:3001/login");
     await driver.findElement(By.id("username")).sendKeys(AUTH_USER);

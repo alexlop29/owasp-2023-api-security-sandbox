@@ -4,6 +4,25 @@ import { DocumentError, DocumentResponse } from "../../types/documents";
 import { joeAtFreshKicks, kyleAtAwesomeSocks } from "../fixtures/personas";
 
 describe("Should describe the document controller", () => {
+  test("Should return 200 if the user has access to the file", () => {
+    let document = new DocumentController();
+    let contents: DocumentResponse | DocumentError =
+      document.readFilePermissions("freshkicks", joeAtFreshKicks["storeName"]);
+    expect(contents["Status"]).toEqual(200);
+    expect(contents["Message"]).toBe("OK");
+  });
+
+  test("Should return 401 if the user does not have access to the file", () => {
+    let document = new DocumentController();
+    let contents: DocumentResponse | DocumentError =
+      document.readFilePermissions(
+        "deliciouspie",
+        joeAtFreshKicks["storeName"],
+      );
+    expect(contents["Status"]).toEqual(401);
+    expect(contents["Message"]).toBe("Unauthorized");
+  });
+
   test("Should return the file contents when the user requests a file and has access to it", async () => {
     let document = new DocumentController();
     expect(
@@ -39,29 +58,8 @@ describe("Should describe the document controller", () => {
   });
 
   test("Should return 500 when the user requests a file and it returns an unhandled error", async () => {});
-
-  test("Should return 200 if the user has access to the file", () => {
-    let document = new DocumentController();
-    let contents: DocumentResponse | DocumentError =
-      document.readFilePermissions("freshkicks", joeAtFreshKicks["storeName"]);
-    expect(contents["Status"]).toEqual(200);
-    expect(contents["Message"]).toBe("OK");
-  });
-
-  test("Should return 401 if the user does not have access to the file", () => {
-    let document = new DocumentController();
-    let contents: DocumentResponse | DocumentError =
-      document.readFilePermissions(
-        "deliciouspie",
-        joeAtFreshKicks["storeName"],
-      );
-    expect(contents["Status"]).toEqual(401);
-    expect(contents["Message"]).toBe("Unauthorized");
-  });
+  /*
+    NOTE: (alopez) Use Sentry to track unhandled errors. Then, update this test to confirm 
+    the expected behavior.
+  */
 });
-
-// /*
-//     NOTE: (ALopez) Continue handling the various fail scenarios.
-// */
-// test("Should return 400 when an invalid file name is provided", async() => {
-// });

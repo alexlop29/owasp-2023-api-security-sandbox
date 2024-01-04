@@ -88,3 +88,18 @@ Return:
 ```
 npm test -- auth.test.ts
 ```
+
+- break down shopRoute and test
+
+Demo Notes:
+
+- Introduce myself, position applying for, topic
+- Mentioned why one topic was selected: highest frequency and desire to provide an in-depth analysis of how it is cuased and how we can fix through well-architectured application security workflow and using test-driven development
+- Mention this is a problem
+
+- close with burp suite web security academy
+
+Spot Additional Bugs:
+
+- Lack of input validation on shopName and documentName
+- Existing file traversal vulnerability in getShopRevenue()

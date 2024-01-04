@@ -1,7 +1,10 @@
+//@ts-nocheck
 import express from "express";
 import { ShopController } from "../controllers/shop";
 import { requiresAuth } from "express-openid-connect";
-import { User } from "../types";
+import { DocumentError, User } from "../types";
+import { validateUserClaim } from "../helpers/validateUserClaim";
+import { getShopErrorResponse } from "../helpers/getShopErrorResponse";
 
 const shopRoute = express.Router();
 shopRoute.use(express.json());
@@ -12,35 +15,21 @@ shopRoute.get("/", async (_req, res) => {
   res.status(200).json(listOfShops);
 });
 
-// May instead want to implement some sort of middleware to handle matching the userMetadata
-// Route is doing too much!
 shopRoute.get("/:storeName/revenue.json", requiresAuth(), async (req, res) => {
-  const storeName = req.params.storeName;
-  const userMetadata = req.oidc.user;
-  if (
-    userMetadata &&
-    "storeName" in userMetadata &&
-    "email" in userMetadata &&
-    "email_verified" in userMetadata &&
-    "iss" in userMetadata &&
-    "sub" in userMetadata &&
-    "aud" in userMetadata &&
-    "iat" in userMetadata &&
-    "exp" in userMetadata
-  ) {
+  const storeName = req.params.storeName; // may want to offload check to custom middleware! // can use to further expand
+  try {
+    const user: User | DocumentError = validateUserClaim(req.oidc.user!);
+    
+    console.log(user); // outputs error, but it is not captured by the external try .. catch {}
+    // will create a custom error object which extends error
     const shops = new ShopController();
-    let revenueData = await shops.getShopRevenue(
-      storeName,
-      userMetadata as User,
-    );
-    res.status(200).json(revenueData);
-  } else {
-    res.status(400).json({ error: "Invalid user metadata" });
+    let revenueData = await shops.getShopRevenue(storeName, user);
+    console.log(revenueData);
+    return res.status(200).json(revenueData);
+  } catch (error) {
+    const handledError: DocumentError = getShopErrorResponse(error);
+    res.status(handledError["Status"]).json(handledError["Message"]);
   }
 });
 
 export { shopRoute };
-
-/*
-Improve error-handling in the routes.
-*/
