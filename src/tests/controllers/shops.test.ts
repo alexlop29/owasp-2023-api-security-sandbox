@@ -25,7 +25,7 @@ describe("Should describe the shop controller", () => {
       Revenue: 500.0,
     });
   });
-  test("Should return 403 if the user does not have access to the shop", async () => {
+  test("Should return 401 if the user does not have access to the shop", async () => {
     const shop = new ShopController();
     let response: Revenue | DocumentError = await shop.getShopRevenue(
       "deliciouspie",
