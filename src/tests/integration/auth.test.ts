@@ -1,7 +1,7 @@
 import { app } from "../../index";
 import { getAuthenticationCookie } from "../utils/getAuthCookie";
 import * as http from "http";
-// import { AUTH_USER } from "../../config/environment";
+import { AUTH_USER } from "../../config/environment";
 
 const request = require("supertest");
 let server: http.Server;
@@ -43,13 +43,11 @@ describe("Should describe the Auth0 OpenID Connect integration", () => {
     request(server).get("/").send().expect(200).expect("Logged out").end(done);
   });
 
-  //   it("should return 200 and output the token claim if an authenticated user requests /profile", async() => {
-  //     const res = await request(server)
-  //       .get("/profile")
-  //       .set("Cookie", [`appSession=${cookie}`])
-  //     expect(res.body).toContain(AUTH_USER);
-  //     expect(res.status).toBe(200);
-  //     // const resToJSON = JSON.parse(response.text);
-  //     // expect(resToJSON.Name).toBe(AUTH_USER);
-  //   });
+  it("should return 200 and output the token claim if an authenticated user requests /profile", async () => {
+    const res = await request(server)
+      .get("/profile")
+      .set("Cookie", [`appSession=${cookie}`]);
+    expect(res.body).toContain(AUTH_USER);
+    expect(res.status).toBe(200);
+  });
 });

@@ -45,16 +45,16 @@ describe("Should describe the Shop route", () => {
       })
       .end(done);
   });
-  // it("should return 200 if the user is authenticated, has the right claim, and requests /:storeName/revenue.json", (done) => {
-  //   request(app)
-  //     .get("/shop/freshkicks/revenue.json")
-  //     .set("Cookie", [`appSession=${cookie}`])
-  //     .expect("Content-Type", /json/)
-  //     .expect((res: any) => {
-  //       expect(res.body).toHaveProperty("Name", "Fresh Kicks");
-  //     })
-  //     .end(done);
-  // });
+  it("should return 200 if the user is authenticated, has the right claim, and requests /:storeName/revenue.json", (done) => {
+    request(app)
+      .get("/shop/freshkicks/revenue.json")
+      .set("Cookie", [`appSession=${cookie}`])
+      .expect("Content-Type", /json/)
+      .expect((res: any) => {
+        expect(res.body).toHaveProperty("Name", "Fresh Kicks");
+      })
+      .end(done);
+  });
   it("should return 401 if the user is authenticated, does not have the right claim, and requests /:storeName/revenue.json", (done) => {
     request(app)
       .get("/shop/deliciouspie/revenue.json")

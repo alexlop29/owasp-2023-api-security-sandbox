@@ -16,15 +16,11 @@ shopRoute.get("/", async (_req, res) => {
 });
 
 shopRoute.get("/:storeName/revenue.json", requiresAuth(), async (req, res) => {
-  const storeName = req.params.storeName; // may want to offload check to custom middleware! // can use to further expand
+  const storeName = req.params.storeName;
   try {
     const user: User | DocumentError = validateUserClaim(req.oidc.user!);
-    
-    console.log(user); // outputs error, but it is not captured by the external try .. catch {}
-    // will create a custom error object which extends error
     const shops = new ShopController();
     let revenueData = await shops.getShopRevenue(storeName, user);
-    console.log(revenueData);
     return res.status(200).json(revenueData);
   } catch (error) {
     const handledError: DocumentError = getShopErrorResponse(error);
